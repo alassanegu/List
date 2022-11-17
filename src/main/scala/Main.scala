@@ -289,11 +289,74 @@ object List {
 object TestList{
   import List._ //cela permet d'importer les fonctions
 
+  def expr: Unit = { // apres execution scala> expr xzyz
+
+    val  x= { println("x"); 3}
+    lazy val y = {println("y"); 2}
+    def z = {println("z"); 3}
+    z + x + y + z + x + y
+  }
+
   def main(args:Array[String]):Unit = {
      val l = List(1, 2, 3, 4)
      val l2 = Cons(1, Cons(2,Nil)) // ca revient au pareil que l mais ceci n'est pas pratique
 
      println("Somme = "+ sum(l))
      println("taille = "+length(l))
+    println(expr)
   }
 }
+
+/*
+scala> List(1,2,3).map(_ + 10)
+val res0: List[Int] = List(11, 12, 13)
+
+scala> List(1,2,3).map(_ + 10).filter(_ % 2 == 0)
+val res1: List[Int] = List(12)
+
+scala> List(1,2,3).map(_ + 10).filter(_ % 2 == 0).map(_ * 3)
+val res2: List[Int] = List(36)
+
+scala> def square(x : Double) : Double = x * x
+def square(x: Double): Double
+
+scala> square(41.0 + 1.0)
+val res0: Double = 1764.0
+
+scala> square(sys.error("Bonjour"))
+java.lang.RuntimeException: Bonjour
+  at scala.sys.package$.error(package.scala:27)
+  ... 41 elided
+
+scala> true && {println("!!"); true }
+!!
+val res2: Boolean = true
+
+scala> false && {println("!!"); true } // ceci n'affiche rien parce que la premiere valeur est false et le compilateur ne regarde pas l'autre
+val res3: Boolean = false
+
+scala> def maybeTwice(b : Boolean, i : =>Int):Int = if(b) i+i else 0
+def maybeTwice(b: Boolean, i: => Int): Int
+
+scala> val x = maybeTwice(true, {println("hi"); 1+41})
+hi
+hi
+val x: Int = 84
+
+scala> def maybeTwice(b : Boolean, i : =>Int):Int = {
+     | lazy val j = i
+     | if(b) j+j else 0
+     | }
+def maybeTwice(b: Boolean, i: => Int): Int
+
+scala> val x = maybeTwice(true, {println("hi"); 1+41})
+hi
+val x: Int = 84
+
+scala>
+
+
+
+
+
+ */
